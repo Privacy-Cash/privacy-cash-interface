@@ -65,11 +65,14 @@ export async function getMyUtxos(signed: Signed, connection: Connection, setStat
             setStatus?.(`(loading utxos...)`)
             let valid_utxos: Utxo[] = []
             let valid_strings: string[] = []
+            console.log('debug localstorageKey(signed.publicKey)', localstorageKey(signed.publicKey))
             try {
                 let offsetStr = localStorage.getItem('fetchUtxoOffset' + localstorageKey(signed.publicKey))
+                console.log('debug offsetStr', roundStartIndex, offsetStr)
                 if (offsetStr) {
                     roundStartIndex = Number(offsetStr)
                 }
+                console.log('debug roundStartIndex', roundStartIndex)
                 decryptionTaskFinished = 0
                 while (true) {
                     let offsetStr = localStorage.getItem('fetchUtxoOffset' + localstorageKey(signed.publicKey))
@@ -190,6 +193,7 @@ async function fetchUserUtxos(signed: Signed, connection: Connection, apiUrl: st
         }
 
         let decryptionTaskTotal = response.data.total + cachedStringNum - roundStartIndex;
+        console.log('debug decryptionTaskTotal', decryptionTaskTotal, response.data, ',cachedStringNum:', cachedStringNum, ',roundStartIndex:', roundStartIndex)
         // check fetched string
         for (let i = 0; i < encryptedOutputs.length; i++) {
             const encryptedOutput = encryptedOutputs[i];

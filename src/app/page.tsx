@@ -19,14 +19,14 @@ export default function Home() {
     }}>
       <WalletCard />
 
-      {/* <button onClick={() => {
+      <button onClick={() => {
         if (publicKey) {
           localStorage.setItem('fetchUtxoOffset' + localstorageKey(publicKey), '0')
           localStorage.setItem('encryptedOutputs' + localstorageKey(publicKey), '')
         }
       }}>
         reset offset index
-      </button> */}
+      </button>
     </div>
   );
 }
