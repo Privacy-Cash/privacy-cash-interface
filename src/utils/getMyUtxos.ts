@@ -75,7 +75,7 @@ export async function getMyUtxos(signed: Signed, connection: Connection, setStat
                     let offsetStr = localStorage.getItem('fetchUtxoOffset' + localstorageKey(signed.publicKey))
                     let fetch_utxo_offset = offsetStr ? Number(offsetStr) : 0
                     let fetch_utxo_end = fetch_utxo_offset + FETCH_UTXOS_GROUP_SIZE
-                    let fetch_utxo_url = `https://api.thelive.bet/utxos/range?start=${fetch_utxo_offset}&end=${fetch_utxo_end}`
+                    let fetch_utxo_url = `https://api.privacycash.org/utxos/range?start=${fetch_utxo_offset}&end=${fetch_utxo_end}`
                     let fetched = await fetchUserUtxos(signed, connection, fetch_utxo_url, setStatus, hasher)
                     for (let [k, utxo] of fetched.utxos.entries()) {
                         if (utxo.amount.toNumber() > 0 && !await isUtxoSpent(connection, utxo)) {
@@ -106,7 +106,7 @@ export async function getMyUtxos(signed: Signed, connection: Connection, setStat
  * Fetch and decrypt UTXOs from apiUrl
  * @param signed The user's signature of message 'ZKCash Account Generation'
  * @param connection Solana connection to fetch on-chain commitment accounts
- * @param apiUrl Optional custom API URL, defaults to 'https://api.thelive.bet/utxos'
+ * @param apiUrl Optional custom API URL, defaults to 'https://api.privacycash.org/utxos'
  * @returns Array of decrypted UTXOs that belong to the user
  */
 async function fetchUserUtxos(signed: Signed, connection: Connection, apiUrl: string, setStatus?: Function, hasher?: any): Promise<{
@@ -133,7 +133,7 @@ async function fetchUserUtxos(signed: Signed, connection: Connection, apiUrl: st
         const utxoKeypair = new UtxoKeypair(utxoPrivateKey, lightWasm);
 
         // Use default API URL if not provided
-        const url = apiUrl || 'https://api.thelive.bet/utxos';
+        const url = apiUrl || 'https://api.privacycash.org/utxos';
         console.log(`Using API endpoint: ${url}`);
 
         // Fetch all UTXOs from the API

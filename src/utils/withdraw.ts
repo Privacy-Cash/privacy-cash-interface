@@ -11,7 +11,7 @@ import { getExtDataHash } from './getExtDataHash';
 import { getMyUtxos, isUtxoSpent } from './getMyUtxos';
 import { Buffer } from 'buffer';
 // Indexer API endpoint
-const INDEXER_API_URL = 'https://api.thelive.bet';
+const INDEXER_API_URL = 'https://api.privacycash.org';
 
 // Function to query remote tree state from indexer API
 async function queryRemoteTreeState(): Promise<{ root: string, nextIndex: number }> {
