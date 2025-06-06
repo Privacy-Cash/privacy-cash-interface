@@ -41,6 +41,13 @@ body {
     align-items: center;
     justify-content: center;
     gap: 5px;
+    white-space: nowrap;
+}
+
+@media (max-width: 450px) {
+    .tab {
+        font-size: 0.9em;
+    }
 }
 
 .navbar {
@@ -142,7 +149,6 @@ body {
     backdrop-filter: blur(24px);
     border-radius: 1rem;
     padding: 1.5rem 1.5rem 0rem 1.5rem;
-    margin-bottom: 1.5rem;
     border: 1px solid rgba(145, 255, 163, 0.5);
     box-sizing: border-box;
 }

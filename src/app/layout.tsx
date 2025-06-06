@@ -26,9 +26,11 @@ export default function RootLayout({
             top: '90px'
           }} />
           <WalletContextProvider>
-            <Header />
-            {children}
-            <Footer />
+            <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+              <Header />
+              {children}
+              <Footer />
+            </div>
           </WalletContextProvider>
         </BufferProvider>
       </body>

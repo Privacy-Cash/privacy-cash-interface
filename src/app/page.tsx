@@ -11,11 +11,11 @@ export default function Home() {
   } = useWallet()
   return (
     <div style={{
-      height: '90vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      flex: 1,
     }}>
       <WalletCard />
 
