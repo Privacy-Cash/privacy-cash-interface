@@ -71,6 +71,8 @@ export async function getMyUtxos(signed: Signed, connection: Connection, setStat
                 console.log('debug offsetStr', roundStartIndex, offsetStr)
                 if (offsetStr) {
                     roundStartIndex = Number(offsetStr)
+                } else {
+                    roundStartIndex = 0
                 }
                 console.log('debug roundStartIndex', roundStartIndex)
                 decryptionTaskFinished = 0
