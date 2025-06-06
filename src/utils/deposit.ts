@@ -4,7 +4,7 @@ import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
 import { CIRCUIT_PATH, FIELD_SIZE, PROGRAM_ID } from './constants';
-import { EncryptionService, getHasher, serializeProofAndExtData } from './encryption';
+import { EncryptionService, serializeProofAndExtData } from './encryption';
 import type { Signed } from './getAccountSign';
 
 import { getExtDataHash } from './getExtDataHash';

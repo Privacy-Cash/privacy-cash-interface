@@ -4,7 +4,7 @@ import axios, { type AxiosResponse } from 'axios';
 import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
-import { EncryptionService, getHasher } from './encryption';
+import { EncryptionService } from './encryption';
 //@ts-ignore
 import * as ffjavascript from 'ffjavascript';
 import { FETCH_UTXOS_GROUP_SIZE, PROGRAM_ID } from './constants';

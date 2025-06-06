@@ -223,7 +223,10 @@ export class EncryptionService {
       throw new Error('Invalid UTXO format after decryption');
     }
     // Get or create a LightWasm instance
-    const wasmInstance = lightWasm || await getHasher()
+    if (!lightWasm) {
+      throw new Error('encryption: undefined lightWasm')
+    }
+    const wasmInstance = lightWasm
 
     // Create a Utxo instance with the provided keypair
     return new Utxo({
@@ -361,10 +364,4 @@ export function serializeProofAndExtData(proof: any, extData: any) {
 export function uint8ArrayToBase64(u8arr: Uint8Array<ArrayBufferLike>) {
   const binaryString = String.fromCharCode(...u8arr);
   return btoa(binaryString);
-}
-
-export async function getHasher() {
-  // const lightWasm = await WasmFactory.getInstance();
-  // return await WasmFactory.loadHasher({ wasm: 'light_wasm_hasher_bg.wasm' })
-  return {} as any
 }

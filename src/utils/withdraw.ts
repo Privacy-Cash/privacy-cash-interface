@@ -5,7 +5,7 @@ import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
 import { parseProofToBytesArray, parseToBytesArray, prove } from '../utils/prover';
 import { CIRCUIT_PATH, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID } from './constants';
-import { EncryptionService, getHasher, serializeProofAndExtData, uint8ArrayToBase64 } from './encryption';
+import { EncryptionService, serializeProofAndExtData, uint8ArrayToBase64 } from './encryption';
 import type { Signed } from './getAccountSign';
 import { getExtDataHash } from './getExtDataHash';
 import { getMyUtxos, isUtxoSpent } from './getMyUtxos';
