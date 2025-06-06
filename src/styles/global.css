@@ -144,7 +144,23 @@ body {
     padding: 1.5rem 1.5rem 0rem 1.5rem;
     margin-bottom: 1.5rem;
     border: 1px solid rgba(145, 255, 163, 0.5);
+    box-sizing: border-box;
 }
+
+@media (max-width: 450px) {
+    .card {
+        width: calc(100% - 2rem);
+        ;
+        margin: 1rem;
+    }
+}
+
+@media (min-width: 451px) {
+    .card {
+        width: 430px;
+    }
+}
+
 
 .spinner-container {
     display: flex;

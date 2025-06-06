@@ -88,7 +88,7 @@ export default function WalletCard() {
 
     return (
         <div className='card'>
-            <div style={{ display: "flex", flexDirection: 'column', width: 400, gap: 20 }}>
+            <div style={{ display: "flex", flexDirection: 'column', gap: 20 }}>
                 <div>
                     <div className='tabs'>
                         <div className='tab' onClick={() => setLiveTab('deposit')} style={liveTab == 'deposit' ? { backgroundColor: '#16a34a', color: 'white' } : {}}>
