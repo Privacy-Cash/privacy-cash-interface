@@ -62,9 +62,9 @@ body {
     background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(24px);
     border-bottom: 1px solid rgba(168, 85, 247, 0.2);
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     flex-direction: row;
     align-items: center;
 }

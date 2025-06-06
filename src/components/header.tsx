@@ -42,7 +42,9 @@ export default function Header() {
     };
 
     return <div className="navbar">
-
+        <div>
+            <img src="/logo.png" style={{ width: 35, height: 35 }} />
+        </div>
         {publicKey ?
 
             <div className="top_right">
