@@ -1,0 +1,25 @@
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-trigger {
+    cursor: pointer;
+}
+
+.dropdown-body-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+}
+
+
+.dropdown-body {
+    margin-top: 3px;
+    background-color: #1f2937;
+    min-width: 120px;
+    padding: 10px 3px;
+    box-sizing: border-box;
+    border-radius: 8px;
+}

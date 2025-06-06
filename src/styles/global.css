@@ -20,10 +20,11 @@ body {
     font-size: 17px;
 }
 
-body,
-html {
-    overflow: hidden;
-    height: 100%;
+.outer_div {
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    height: 100vh;
 }
 
 .footer {
@@ -68,10 +69,28 @@ html {
     align-items: center;
 }
 
+.top_right {
+    display: flex;
+}
+
+@media (max-width: 450px) {
+    .top_right {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (min-width: 451px) {
+    .top_right {
+        flex-direction: row;
+        align-items: center;
+        gap: 2px;
+    }
+}
+
 .btn {
     all: unset;
     cursor: pointer;
-    color: white;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     /* rounded-lg */
@@ -93,6 +112,16 @@ html {
     text-decoration: underline;
 }
 
+.btn-plain span {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.btn-plain:hover span {
+    color: white;
+    transform: scale(1.02);
+}
+
 .btn-green {
     background-color: #16a34a;
     ;
@@ -110,6 +139,10 @@ html {
 
 .btn-lg {
     padding: 0.8rem 1.5rem;
+}
+
+.btn-sm {
+    font-size: 14px;
 }
 
 .btn-block {
@@ -210,4 +243,27 @@ html {
 
 .withdraw_max:hover {
     background-color: #888888;
+}
+
+.user_panel_btn {
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: rgba(0, 0, 0, 0.5) 1px solid;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.user_panel_btn:hover {
+    border-color: rgba(145, 255, 163, 0.5);
+}
+
+.btn-plain .disconnect_btn {
+    color: #ff8d8d;
+}
+
+.btn-plain .disconnect_btn:hover {
+    color: #ff8d8d;
 }

@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { getAccountSign } from '../utils/getAccountSign'
 
 
-export default function WalletConnectButton({ showDisconnect = false, size = 'nm' }: { showDisconnect?: boolean, size?: 'nm' | 'lg' }) {
+export default function WalletConnectButton({ size = 'nm' }: { showDisconnect?: boolean, size?: 'nm' | 'lg' }) {
     const {
         wallets,
         wallet,
@@ -45,17 +45,6 @@ export default function WalletConnectButton({ showDisconnect = false, size = 'nm
         }
     }
 
-    // Triggered when the user clicks the disconnect button
-    const handleDisconnect = async () => {
-        try {
-            localStorage.removeItem('walletAdapter') // Remove persisted wallet name
-            select(null) // Reset the selected wallet to force re-selection next time
-            await disconnect()
-        } catch (err) {
-            console.error('Failed to disconnect wallet:', err)
-        }
-    }
-
     // After selecting a wallet, wait until the wallet is set and then connect
     useEffect(() => {
         const tryConnect = async () => {
@@ -75,15 +64,6 @@ export default function WalletConnectButton({ showDisconnect = false, size = 'nm
 
     // If connected, show disconnect button
     if (connected && publicKey) {
-        if (showDisconnect) {
-            return (
-                <div>
-                    <button onClick={handleDisconnect} className={"btn btn-underline" + (size == 'lg' ? ' btn-lg' : '')}>
-                        disconnect
-                    </button>
-                </div>
-            )
-        }
         return null
     }
 
