@@ -1,5 +1,5 @@
 'use client'
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import axios, { type AxiosResponse } from 'axios';
 import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
@@ -65,16 +65,13 @@ export async function getMyUtxos(signed: Signed, connection: Connection, setStat
             setStatus?.(`(loading utxos...)`)
             let valid_utxos: Utxo[] = []
             let valid_strings: string[] = []
-            console.log('debug localstorageKey(signed.publicKey)', localstorageKey(signed.publicKey))
             try {
                 let offsetStr = localStorage.getItem('fetchUtxoOffset' + localstorageKey(signed.publicKey))
-                console.log('debug offsetStr', roundStartIndex, offsetStr)
                 if (offsetStr) {
                     roundStartIndex = Number(offsetStr)
                 } else {
                     roundStartIndex = 0
                 }
-                console.log('debug roundStartIndex', roundStartIndex)
                 decryptionTaskFinished = 0
                 while (true) {
                     let offsetStr = localStorage.getItem('fetchUtxoOffset' + localstorageKey(signed.publicKey))
@@ -82,12 +79,16 @@ export async function getMyUtxos(signed: Signed, connection: Connection, setStat
                     let fetch_utxo_end = fetch_utxo_offset + FETCH_UTXOS_GROUP_SIZE
                     let fetch_utxo_url = `https://api.privacycash.org/utxos/range?start=${fetch_utxo_offset}&end=${fetch_utxo_end}`
                     let fetched = await fetchUserUtxos(signed, connection, fetch_utxo_url, setStatus, hasher)
+                    let am = 0
                     for (let [k, utxo] of fetched.utxos.entries()) {
                         if (utxo.amount.toNumber() > 0 && !await isUtxoSpent(connection, utxo)) {
+                            console.log('debug utxo amout', fetched.encryptedOutputs[k], utxo.amount.toNumber())
+                            am += utxo.amount.toNumber()
                             valid_utxos.push(utxo)
                             valid_strings.push(fetched.encryptedOutputs[k])
                         }
                     }
+                    console.log('debug total: ', am / LAMPORTS_PER_SOL)
                     localStorage.setItem('fetchUtxoOffset' + localstorageKey(signed.publicKey), (fetch_utxo_offset + fetched.len).toString())
                     if (!fetched.hashMore) {
                         break
@@ -195,7 +196,6 @@ async function fetchUserUtxos(signed: Signed, connection: Connection, apiUrl: st
         }
 
         let decryptionTaskTotal = response.data.total + cachedStringNum - roundStartIndex;
-        console.log('debug decryptionTaskTotal', decryptionTaskTotal, response.data, ',cachedStringNum:', cachedStringNum, ',roundStartIndex:', roundStartIndex)
         // check fetched string
         for (let i = 0; i < encryptedOutputs.length; i++) {
             const encryptedOutput = encryptedOutputs[i];
