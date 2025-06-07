@@ -295,8 +295,13 @@ export async function isUtxoSpent(connection: Connection, utxo: Utxo): Promise<b
 
         console.log(`UTXO is unspent (no nullifier accounts found)`);
         return false;
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error checking if UTXO is spent:', error);
+        if (error.message?.includes("429")) {
+            console.error("code 429, retry..");
+            await new Promise(resolve => setTimeout(resolve, 50000));
+            return await isUtxoSpent(connection, utxo)
+        }
         return true; // Default to spent in case of errors
     }
 }
