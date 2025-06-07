@@ -111,6 +111,7 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
     let amount_in_lamports = amount_in_sol * LAMPORTS_PER_SOL
     let fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
     amount_in_lamports -= fee_amount_in_lamports
+    let isPartial = false
     try {
         // Initialize the light protocol hasher
         const lightWasm = hasher
@@ -217,6 +218,7 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
             throw new Error('no balance')
         }
         if (totalInputAmount.lt(new BN(amount_in_lamports + fee_amount_in_lamports))) {
+            isPartial = true
             amount_in_lamports = totalInputAmount.toNumber()
             fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
             amount_in_lamports -= fee_amount_in_lamports
@@ -415,7 +417,7 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
         await new Promise(resolve => setTimeout(resolve, 10000));
 
         // balance updating was removed here because it will updated after return true
-        return true
+        return { isPartial }
 
     } catch (error: any) {
         console.error('Error during withdrawal:', error);

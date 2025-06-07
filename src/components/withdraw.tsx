@@ -72,7 +72,11 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
                     const lamports = await connection.getBalance(publicKey)
                     setBalance(lamports / LAMPORTS_PER_SOL)
                 }
-                toastSuccess('Withdraw successful')
+                if (success.isPartial) {
+                    toastSuccess('Partial withdrawal successful')
+                } else {
+                    toastSuccess('Withdraw successful')
+                }
                 setWithdrawAmount('')
             }
         } catch (e) {
