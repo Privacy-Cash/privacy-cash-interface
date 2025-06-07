@@ -297,7 +297,7 @@ export async function isUtxoSpent(connection: Connection, utxo: Utxo): Promise<b
         return false;
     } catch (error) {
         console.error('Error checking if UTXO is spent:', error);
-        return false; // Default to unspent in case of errors
+        return true; // Default to spent in case of errors
     }
 }
 
