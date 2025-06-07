@@ -48,7 +48,7 @@ let roundStartIndex = 0
 let decryptionTaskFinished = 0;
 /**
  * Fetch and decrypt all UTXOs for a user
- * @param signed The user's signature of message 'ZKCash Account Generation'
+ * @param signed The user's signature 
  * @param connection Solana connection to fetch on-chain commitment accounts
  * @param setStatus A global state updator. Set live status message showing on webpage
  * @returns Array of decrypted UTXOs that belong to the user
@@ -110,7 +110,7 @@ export async function getMyUtxos(signed: Signed, connection: Connection, setStat
 
 /**
  * Fetch and decrypt UTXOs from apiUrl
- * @param signed The user's signature of message 'ZKCash Account Generation'
+ * @param signed The user's signature
  * @param connection Solana connection to fetch on-chain commitment accounts
  * @param apiUrl Optional custom API URL, defaults to 'https://api.privacycash.org/utxos'
  * @returns Array of decrypted UTXOs that belong to the user

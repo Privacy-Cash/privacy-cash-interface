@@ -50,7 +50,7 @@ export async function getAccountSign(): Promise<Signed | undefined> {
         throw new Error('no connected wallet provider found')
     }
 
-    const message = `ZKCash Account Generation`
+    const message = `Privacy Money account sign in`
     const encodedMessage = new TextEncoder().encode(message)
 
     if (!selectedProvider.publicKey) {
