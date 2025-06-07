@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Send SOL privately",
   icons: {
     icon: '/logo.png',
-  }
+  },
 };
 export default function RootLayout({
   children,
