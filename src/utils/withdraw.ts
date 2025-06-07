@@ -109,7 +109,7 @@ async function submitWithdrawToIndexer(params: any): Promise<string> {
 
 export async function withdraw(recipient_address: PublicKey, amount_in_sol: number, signed: Signed, connection: Connection, setStatus?: Function, hasher?: any) {
     let amount_in_lamports = amount_in_sol * LAMPORTS_PER_SOL
-    const fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
+    let fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
     amount_in_lamports -= fee_amount_in_lamports
     try {
         // Initialize the light protocol hasher
@@ -213,9 +213,15 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
         const totalInputAmount = firstInput.amount.add(secondInput.amount);
         console.log(`Using UTXO with amount: ${firstInput.amount.toString()} and ${secondInput.amount.gt(new BN(0)) ? 'second UTXO with amount: ' + secondInput.amount.toString() : 'dummy UTXO'}`);
 
+        if (totalInputAmount.toNumber() === 0) {
+            throw new Error('no balance')
+        }
         if (totalInputAmount.lt(new BN(amount_in_lamports + fee_amount_in_lamports))) {
-            console.error(`Insufficient UTXO balance: ${totalInputAmount.toString()}. Need at least ${amount_in_lamports + fee_amount_in_lamports}`);
-            return;
+            amount_in_lamports = totalInputAmount.toNumber()
+            fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
+            amount_in_lamports -= fee_amount_in_lamports
+            // console.error(`Insufficient UTXO balance: ${totalInputAmount.toString()}. Need at least ${amount_in_lamports + fee_amount_in_lamports}`);
+            // return;
         }
 
         // Calculate the change amount (what's left after withdrawal and fee)
