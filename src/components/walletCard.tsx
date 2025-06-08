@@ -22,7 +22,6 @@ export default function WalletCard() {
     const [isUpdatingUtxo, setIsUpdatingUtxo] = useAtom(updatingUtxoAtom)
     const [userUtxo, setUserUtxo] = useAtom(userUtxoAmount)
     const [status, setStatus] = useAtom(statusAtom)
-
     const [isDepositing] = useAtom(isDepositingAtom)
 
     useEffect(() => {
