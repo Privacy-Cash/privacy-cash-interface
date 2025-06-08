@@ -13,7 +13,7 @@ const FullHeightContainer: FC<{ children: React.ReactNode }> = ({ children }) =>
             }
         };
 
-        // init height
+        // init
         setTrueHeight();
         window.addEventListener('resize', setTrueHeight);
 
