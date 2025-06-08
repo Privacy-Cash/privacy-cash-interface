@@ -450,11 +450,10 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
         transaction.recentBlockhash = latestBlockhash.blockhash;
         transaction.feePayer = signed.publicKey;
 
-        // ask for sign
-        const signedTx = await window.solana.signTransaction(transaction);
-        const txid = await connection.sendRawTransaction(signedTx.serialize());
+        // Use signAndSendTransaction as recommended by Phantom for better compatibility with Lighthouse guard instructions
+        const { signature: txid } = await window.solana.signAndSendTransaction(transaction);
 
-        // confirm the transation
+        // confirm the transaction
         await connection.confirmTransaction({
             signature: txid,
             blockhash: latestBlockhash.blockhash,
