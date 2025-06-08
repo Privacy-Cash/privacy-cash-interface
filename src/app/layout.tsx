@@ -7,6 +7,7 @@ import Header from "@/components/header";
 import { WalletContextProvider } from "@/components/walletProvider";
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { BufferProvider } from '../components/bufferProvider';
+import FullHeightContainer from "@/components/container";
 
 export const metadata: Metadata = {
   title: "Privacy Cash",
@@ -28,10 +29,10 @@ export default function RootLayout({
             top: '90px'
           }} />
           <WalletContextProvider>
-            <div className="outer_div">
+            <FullHeightContainer>
               <Header />
               {children}
-            </div>
+            </FullHeightContainer>
           </WalletContextProvider>
         </BufferProvider>
       </body>
