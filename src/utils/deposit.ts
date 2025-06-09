@@ -3,7 +3,7 @@ import { ComputeBudgetProgram, Connection, LAMPORTS_PER_SOL, PublicKey, SystemPr
 import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
-import { CIRCUIT_PATH, FIELD_SIZE, PROGRAM_ID } from './constants';
+import { CIRCUIT_PATH, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID } from './constants';
 import { EncryptionService, serializeProofAndExtData } from './encryption';
 import type { Signed } from './getAccountSign';
 
@@ -90,7 +90,7 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
         const encryptionService = new EncryptionService();
 
         // Use hardcoded deployer public key
-        const deployer = new PublicKey('1NpWc4q6VYJmg9V3TQenvHMTr8qiDDrrT4TV27SxQms');
+        const deployer = new PublicKey('2rDPKjjxMteR4vHFgFnZiZ6KzSLeUnH7nVEdnCQCVu52');
         console.log('Using hardcoded deployer public key');
         // Generate encryption key from the user signature
         encryptionService.deriveEncryptionKeyFromSignature(signed.signature);
@@ -130,7 +130,7 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
         console.log(`Tree Token Account: ${treeTokenAccount.toString()}`);
 
         // Create the merkle tree with the pre-initialized poseidon hash
-        const tree = new MerkleTree(20, lightWasm);
+        const tree = new MerkleTree(MERKLE_TREE_DEPTH, lightWasm);
 
         // Initialize root and nextIndex variables
         let root: string;

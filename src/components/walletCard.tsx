@@ -22,9 +22,7 @@ export default function WalletCard() {
     const [isUpdatingUtxo, setIsUpdatingUtxo] = useAtom(updatingUtxoAtom)
     const [userUtxo, setUserUtxo] = useAtom(userUtxoAmount)
     const [status, setStatus] = useAtom(statusAtom)
-
     const [isDepositing] = useAtom(isDepositingAtom)
-    const [isWithdrawing] = useAtom(isWithdrawingAtom)
 
     useEffect(() => {
         if (typeof window === 'undefined') return; // 确保仅客户端执行
