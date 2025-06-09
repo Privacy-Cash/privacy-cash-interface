@@ -119,7 +119,7 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
         // Initialize the encryption service
         const encryptionService = new EncryptionService();
         // Use hardcoded deployer public key
-        const deployer = new PublicKey('1NpWc4q6VYJmg9V3TQenvHMTr8qiDDrrT4TV27SxQms');
+        const deployer = new PublicKey('2rDPKjjxMteR4vHFgFnZiZ6KzSLeUnH7nVEdnCQCVu52');
         console.log('Using hardcoded deployer public key');
 
         // Generate encryption key from the user signature
