@@ -40,7 +40,7 @@ function sleep(ms: number): Promise<string> {
 }
 
 export function localstorageKey(key: PublicKey) {
-    return key.toString().substring(0, 10)
+    return PROGRAM_ID.toString().substring(0, 6) + key.toString().substring(0, 6)
 }
 
 let getMyUtxosPromise: Promise<Utxo[]> | null = null
