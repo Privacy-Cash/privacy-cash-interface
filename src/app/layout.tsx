@@ -32,6 +32,7 @@ export default function RootLayout({
             <FullHeightContainer>
               <Header />
               {children}
+              <Footer />
             </FullHeightContainer>
           </WalletContextProvider>
         </BufferProvider>
