@@ -4,25 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { type FC } from 'react';
 
 const FullHeightContainer: FC<{ children: React.ReactNode }> = ({ children }) => {
-    const containerRef = useRef(null);
-    const [height, setHeight] = useState('100vh');
-    useEffect(() => {
-        const setTrueHeight = () => {
-            if (containerRef.current) {
-                setHeight(`${window.innerHeight}px`);
-            }
-        };
-
-        setTrueHeight();
-        window.addEventListener('resize', setTrueHeight);
-
-        return () => {
-            window.removeEventListener('resize', setTrueHeight);
-        };
-    }, []);
 
     return (
-        <div ref={containerRef} style={{ height: height }} className='container'>
+        <div style={{ height: '100dvh' }} className='container'>
             {children}
         </div>
     );
