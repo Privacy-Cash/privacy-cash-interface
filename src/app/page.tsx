@@ -2,15 +2,8 @@
 import WalletCard from "@/components/walletCard";
 import { useEffect, useState } from "react";
 
-export default function Home() {
-  const [opacity, setOpacity] = useState(0);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setOpacity(1);
-    }, 100);
 
-    return () => clearTimeout(timer);
-  }, []);
+export default function Home() {
 
   return (
     <div style={{
@@ -19,8 +12,6 @@ export default function Home() {
       justifyContent: 'center',
       flexDirection: 'column',
       flex: 1,
-      opacity: opacity,
-      transition: 'opacity 0.3s ease-in-out'
     }}>
       <WalletCard />
 

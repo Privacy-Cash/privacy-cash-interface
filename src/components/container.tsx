@@ -22,7 +22,7 @@ const FullHeightContainer: FC<{ children: React.ReactNode }> = ({ children }) =>
     }, []);
 
     return (
-        <div ref={containerRef} style={{ height: height }} className='container'>
+        <div ref={containerRef} style={{ height: '93vh', paddingBottom: '7vh' }} className='container'>
             {children}
         </div>
     );
