@@ -1,14 +1,17 @@
 'use client'
-import Image from "next/image";
-import styles from "./page.module.css";
 import WalletCard from "@/components/walletCard";
-import { localstorageKey } from "@/utils/getMyUtxos";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const {
-    publicKey,
-  } = useWallet()
+  const [opacity, setOpacity] = useState(0);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOpacity(1);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div style={{
       display: 'flex',
@@ -16,6 +19,8 @@ export default function Home() {
       justifyContent: 'center',
       flexDirection: 'column',
       flex: 1,
+      opacity: opacity,
+      transition: 'opacity 0.3s ease-in-out'
     }}>
       <WalletCard />
 
