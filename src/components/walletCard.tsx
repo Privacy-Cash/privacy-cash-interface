@@ -24,8 +24,9 @@ export default function WalletCard() {
     const [status, setStatus] = useAtom(statusAtom)
     const [isDepositing] = useAtom(isDepositingAtom)
 
+    // load hasher from web browser
     useEffect(() => {
-        if (typeof window === 'undefined') return; // 确保仅客户端执行
+        if (typeof window === 'undefined') return; // return if not in web browser
 
         (async () => {
             console.log('loading hashser')
@@ -53,17 +54,30 @@ export default function WalletCard() {
                     if (!hasher) {
                         console.log('updateUtxo: hasher not ready')
                     }
-                    let myValidUtxos = await getMyUtxos(signed, connection, setStatus, hasher)
-                    if (myValidUtxos.length === 0) {
-                        console.log('No UTXOs found for this keypair.');
-                    } else {
-                        newUtxo = getBalanceFromUtxos(myValidUtxos)
+                    try {
+                        console.log('checking user sign')
+                        let myValidUtxos = await getMyUtxos(signed, connection, setStatus, hasher)
+                        if (myValidUtxos.length === 0) {
+                            console.log('No UTXOs found for this keypair.');
+                            setUserUtxo(0)
+                        } else {
+                            newUtxo = getBalanceFromUtxos(myValidUtxos)
+                        }
+                        setUserUtxo(newUtxo)
+                    } catch (e) {
+                        console.log('problem occurred on getting utxo')
+                        setUserUtxo(0)
                     }
-                    setUserUtxo(newUtxo)
+                } else {
+                    // is user is not signed, display "0 SOL"
+                    setUserUtxo(0)
                 }
             } catch (e) {
-                console.error(e)
+                console.log('problem occurred on signing')
+                // user not signed
+                setUserUtxo(0)
             }
+
             setIsUpdatingUtxo(false)
             if (newUtxo != orgUtxo) {
                 return true
@@ -78,6 +92,7 @@ export default function WalletCard() {
 
     // after user connected wallet, update Utxo
     useEffect(() => {
+        console.log('user wallet switched')
         if (publicKey && hasher) {
             updateUtxo()
         }
