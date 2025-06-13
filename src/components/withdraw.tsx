@@ -62,7 +62,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
             try {
                 recipient_address = new PublicKey(receptAddress)
             } catch (e) {
-                toastError('Not a valid solana address')
+                toastError('Enter a valid Solana address')
                 setIsWithdrawing(false)
                 return
             }
