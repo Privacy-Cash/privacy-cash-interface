@@ -56,10 +56,17 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
 
         // start withdrawal
         setIsWithdrawing(true)
-        setStatus(`(loading utxos...)`)
         try {
             let orgBalance = balance
-            let recipient_address = new PublicKey(receptAddress)
+            let recipient_address: PublicKey
+            try {
+                recipient_address = new PublicKey(receptAddress)
+            } catch (e) {
+                toastError('Enter a valid Solana address')
+                setIsWithdrawing(false)
+                return
+            }
+            setStatus(`(loading utxos...)`)
             let success = await withdraw(recipient_address, amount, signed, connection, setStatus, hasher)
             if (success) {
                 let utxoChanged = await updateUtxo()
