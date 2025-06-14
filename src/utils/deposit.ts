@@ -3,7 +3,7 @@ import { ComputeBudgetProgram, Connection, LAMPORTS_PER_SOL, PublicKey, SystemPr
 import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
-import { CIRCUIT_PATH, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID } from './constants';
+import { CIRCUIT_PATH, DEPLOYER_ID, FEE_RECIPIENT, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID } from './constants';
 import { EncryptionService, serializeProofAndExtData } from './encryption';
 import type { Signed } from './getAccountSign';
 
@@ -81,7 +81,8 @@ function findCommitmentPDAs(proof: any) {
 
 export async function deposit(amount_in_sol: number, signed: Signed, connection: Connection, setStatus?: Function, hasher?: any) {
     const amount_in_lamports = amount_in_sol * LAMPORTS_PER_SOL
-    const fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
+    // const fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
+    const fee_amount_in_lamports = 0
     try {
         // Initialize the light protocol hasher
         // let lightWasm = await getHasher()
@@ -89,14 +90,12 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
         // Initialize the encryption service
         const encryptionService = new EncryptionService();
 
-        // Use hardcoded deployer public key
-        const deployer = new PublicKey('2rDPKjjxMteR4vHFgFnZiZ6KzSLeUnH7nVEdnCQCVu52');
         console.log('Using hardcoded deployer public key');
         // Generate encryption key from the user signature
         encryptionService.deriveEncryptionKeyFromSignature(signed.signature);
         console.log('Encryption key generated from user keypair');
 
-        console.log(`Deployer wallet: ${deployer.toString()}`);
+        console.log(`Deployer wallet: ${DEPLOYER_ID.toString()}`);
         console.log(`User wallet: ${signed.publicKey.toString()}`);
 
         // Check wallet balance
@@ -110,23 +109,24 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
 
         // Derive PDA (Program Derived Addresses) for the tree account and other required accounts
         const [treeAccount] = PublicKey.findProgramAddressSync(
-            [Buffer.from('merkle_tree'), deployer.toBuffer()],
+            [Buffer.from('merkle_tree'), DEPLOYER_ID.toBuffer()],
             PROGRAM_ID
         );
 
-        const [feeRecipientAccount] = PublicKey.findProgramAddressSync(
-            [Buffer.from('fee_recipient'), deployer.toBuffer()],
-            PROGRAM_ID
-        );
+        // const [feeRecipientAccount] = PublicKey.findProgramAddressSync(
+        //     [Buffer.from('fee_recipient'), DEPLOYER_ID.toBuffer()],
+        //     PROGRAM_ID
+        // );
+
 
         const [treeTokenAccount] = PublicKey.findProgramAddressSync(
-            [Buffer.from('tree_token'), deployer.toBuffer()],
+            [Buffer.from('tree_token'), DEPLOYER_ID.toBuffer()],
             PROGRAM_ID
         );
 
         console.log('Using PDAs:');
         console.log(`Tree Account: ${treeAccount.toString()}`);
-        console.log(`Fee Recipient Account: ${feeRecipientAccount.toString()}`);
+        console.log(`Fee Recipient Account: ${FEE_RECIPIENT.toString()}`);
         console.log(`Tree Token Account: ${treeTokenAccount.toString()}`);
 
         // Create the merkle tree with the pre-initialized poseidon hash
@@ -429,9 +429,9 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
                 // recipient
                 { pubkey: signed.publicKey, isSigner: false, isWritable: true },
                 // fee recipient
-                { pubkey: feeRecipientAccount, isSigner: false, isWritable: true },
+                { pubkey: FEE_RECIPIENT, isSigner: false, isWritable: true },
                 // fee recipient
-                { pubkey: deployer, isSigner: false, isWritable: false },
+                { pubkey: DEPLOYER_ID, isSigner: false, isWritable: false },
                 // signer
                 { pubkey: signed.publicKey, isSigner: true, isWritable: true },
                 { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
