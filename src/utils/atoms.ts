@@ -21,3 +21,5 @@ export const isWithdrawingAtom = atom(false)
 
 // hasher
 export const hasherAtom = atom<any>(null)
+let aa = 123
+type cc = AnyARecord

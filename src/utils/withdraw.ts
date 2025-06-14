@@ -4,7 +4,7 @@ import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
 import { parseProofToBytesArray, parseToBytesArray, prove } from '../utils/prover';
-import { CIRCUIT_PATH, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID } from './constants';
+import { CIRCUIT_PATH, DEPLOYER_ID, FEE_RECIPIENT, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID } from './constants';
 import { EncryptionService, serializeProofAndExtData, uint8ArrayToBase64 } from './encryption';
 import type { Signed } from './getAccountSign';
 import { getExtDataHash } from './getExtDataHash';
@@ -118,8 +118,6 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
 
         // Initialize the encryption service
         const encryptionService = new EncryptionService();
-        // Use hardcoded deployer public key
-        const deployer = new PublicKey('2rDPKjjxMteR4vHFgFnZiZ6KzSLeUnH7nVEdnCQCVu52');
         console.log('Using hardcoded deployer public key');
 
         // Generate encryption key from the user signature
@@ -127,27 +125,27 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
 
         console.log('Encryption key generated from user keypair');
 
-        console.log(`Deployer wallet: ${deployer.toString()}`);
+        console.log(`Deployer wallet: ${DEPLOYER_ID.toString()}`);
 
         // Derive PDA (Program Derived Addresses) for the tree account and other required accounts
         const [treeAccount] = PublicKey.findProgramAddressSync(
-            [Buffer.from('merkle_tree'), deployer.toBuffer()],
+            [Buffer.from('merkle_tree'), DEPLOYER_ID.toBuffer()],
             PROGRAM_ID
         );
 
-        const [feeRecipientAccount] = PublicKey.findProgramAddressSync(
-            [Buffer.from('fee_recipient'), deployer.toBuffer()],
-            PROGRAM_ID
-        );
+        // const [feeRecipientAccount] = PublicKey.findProgramAddressSync(
+        //     [Buffer.from('fee_recipient'), DEPLOYER_ID.toBuffer()],
+        //     PROGRAM_ID
+        // );
 
         const [treeTokenAccount] = PublicKey.findProgramAddressSync(
-            [Buffer.from('tree_token'), deployer.toBuffer()],
+            [Buffer.from('tree_token'), DEPLOYER_ID.toBuffer()],
             PROGRAM_ID
         );
 
         console.log('Using PDAs:');
         console.log(`Tree Account: ${treeAccount.toString()}`);
-        console.log(`Fee Recipient Account: ${feeRecipientAccount.toString()}`);
+        console.log(`Fee Recipient Account: ${FEE_RECIPIENT.toString()}`);
         console.log(`Tree Token Account: ${treeTokenAccount.toString()}`);
 
         // Get all relevant balances before transaction
@@ -395,8 +393,8 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
             commitment1PDA: commitment1PDA.toString(),
             treeTokenAccount: treeTokenAccount.toString(),
             recipient: recipient_address.toString(),
-            feeRecipientAccount: feeRecipientAccount.toString(),
-            deployer: deployer.toString(),
+            feeRecipientAccount: FEE_RECIPIENT.toString(),
+            deployer: DEPLOYER_ID.toString(),
             extAmount: extAmount,
             encryptedOutput1: uint8ArrayToBase64(encryptedOutput1),
             encryptedOutput2: uint8ArrayToBase64(encryptedOutput2),
