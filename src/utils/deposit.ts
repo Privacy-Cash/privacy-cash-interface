@@ -81,7 +81,8 @@ function findCommitmentPDAs(proof: any) {
 
 export async function deposit(amount_in_sol: number, signed: Signed, connection: Connection, setStatus?: Function, hasher?: any) {
     const amount_in_lamports = amount_in_sol * LAMPORTS_PER_SOL
-    const fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
+    // const fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
+    const fee_amount_in_lamports = 0
     try {
         // Initialize the light protocol hasher
         // let lightWasm = await getHasher()
