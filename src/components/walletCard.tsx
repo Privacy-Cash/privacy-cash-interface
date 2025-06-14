@@ -43,7 +43,9 @@ export default function WalletCard() {
     }, [])
     // ask for signing and update user Utxo balance
     const updateUtxo = async () => {
+        console.log('updateUtxo is called')
         if (!isUpdatingUtxo) {
+            console.log('start updating utxo')
             setIsUpdatingUtxo(true)
             let orgUtxo = userUtxo
             let newUtxo = 0
@@ -69,7 +71,8 @@ export default function WalletCard() {
                         setUserUtxo(0)
                     }
                 } else {
-                    // is user is not signed, display "0 SOL"
+                    // user is not signed, display "0 SOL"
+                    console.log('user is not signed')
                     setUserUtxo(0)
                 }
             } catch (e) {
@@ -93,9 +96,15 @@ export default function WalletCard() {
     // after user connected wallet, update Utxo
     useEffect(() => {
         console.log('user wallet switched')
-        if (publicKey && hasher) {
-            updateUtxo()
+        if (!publicKey) {
+            console.log('publicKey is not ready')
+            return
         }
+        if (!hasher) {
+            console.log('hasher is not ready')
+            return
+        }
+        updateUtxo()
     }, [publicKey, hasher])
 
 
