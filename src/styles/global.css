@@ -319,3 +319,7 @@ body {
 .btn-outline {
     border: 1px solid #ccc;
 }
+
+.btn-outline:hover {
+    border-color: #0f923f;
+}
