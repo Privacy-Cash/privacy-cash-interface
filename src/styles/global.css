@@ -321,8 +321,18 @@ body {
 
 .btn-outline {
     border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
 .btn-outline:hover {
-    border-color: #0f923f;
+    border-color: #1caa50;
+    border-width: 2px;
+}
+
+.hover-zoomin:hover {
+    transform: scale(1.2);
+}
+
+.hover-zoomin:hover {
+    transform: scale(1.2);
 }

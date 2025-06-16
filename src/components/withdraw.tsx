@@ -126,7 +126,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
 
     const balanceBox = <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.7 }}>
         <div>Private balance: {isUpdatingUtxo ? 'Loading..' : userUtxo.toFixed(9) + ' SOL'}</div>
-        <div>
+        <div style={{ height: 32, width: 90, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <button className="btn btn-outline btn-sm" onClick={openModal}><Icon name="plus" /> <span>Top Up</span></button>
         </div>
     </div>

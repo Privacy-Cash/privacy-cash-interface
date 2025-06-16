@@ -101,12 +101,12 @@ export const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdrop
             >
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                     <div style={{ fontSize: '1.2em' }}>{title}</div>
-                    <div style={{ cursor: 'pointer', color: isDepositing ? '#333' : '#ccc' }} onClick={() => {
+                    <div style={{ cursor: isDepositing ? 'default' : 'pointer', color: isDepositing ? '#333' : '#ccc' }} onClick={() => {
                         if (isDepositing) {
                             return
                         }
                         initiateClose()
-                    }}><Icon name='close' /></div>
+                    }} className={isDepositing ? '' : 'hover-zoomin'}><Icon name='close' /></div>
                 </div>
                 {children}
             </div>
