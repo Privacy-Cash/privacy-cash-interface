@@ -4,7 +4,7 @@ import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
 import { parseProofToBytesArray, parseToBytesArray, prove } from '../utils/prover';
-import { CIRCUIT_PATH, DEPLOYER_ID, FEE_RECIPIENT, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID } from './constants';
+import { CIRCUIT_PATH, DEPLOYER_ID, FEE_RECIPIENT, FIELD_SIZE, MERKLE_TREE_DEPTH, PROGRAM_ID, WITHDRAW_FEE_RATE } from './constants';
 import { EncryptionService, serializeProofAndExtData, uint8ArrayToBase64 } from './encryption';
 import type { Signed } from './getAccountSign';
 import { getExtDataHash } from './getExtDataHash';
@@ -109,7 +109,7 @@ async function submitWithdrawToIndexer(params: any): Promise<string> {
 
 export async function withdraw(recipient_address: PublicKey, amount_in_sol: number, signed: Signed, connection: Connection, setStatus?: Function, hasher?: any) {
     let amount_in_lamports = amount_in_sol * LAMPORTS_PER_SOL
-    let fee_amount_in_lamports = Math.floor(amount_in_lamports * 25 / 10000)
+    let fee_amount_in_lamports = Math.floor(amount_in_lamports * WITHDRAW_FEE_RATE)
     amount_in_lamports -= fee_amount_in_lamports
     let isPartial = false
     try {

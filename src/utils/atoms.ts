@@ -21,3 +21,6 @@ export const isWithdrawingAtom = atom(false)
 
 // hasher
 export const hasherAtom = atom<any>(null)
+
+// modal
+export const showModalAtom = atom(false)
