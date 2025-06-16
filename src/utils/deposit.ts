@@ -483,7 +483,7 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
             console.log(`UTXOs added in this deposit: ${utxosAdded} (expected: 2)`);
 
             if (updatedTreeState.nextIndex === expectedNextIndex) {
-                console.log('Top up successful! UTXOs were added to the Merkle tree.');
+                console.log('Top up successfully! UTXOs were added to the Merkle tree.');
                 return true
             } else {
                 console.log(`Warning: Expected nextIndex to be ${expectedNextIndex}, but got ${updatedTreeState.nextIndex}`);

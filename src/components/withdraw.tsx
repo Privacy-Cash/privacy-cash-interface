@@ -53,7 +53,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
             return
         }
         if (amount > userUtxo) {
-            toastError(`Can't withdraw more SOL than your balance`)
+            toastError(`Insufficient balance. Top up more funds.`)
             return
         }
         let signed = await getAccountSign()
@@ -92,7 +92,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
                 if (success.isPartial) {
                     toastSuccess('Sent partial fund successfully')
                 } else {
-                    toastSuccess('Sent successful')
+                    toastSuccess('Sent successfully')
                 }
                 setWithdrawAmount('')
             }
@@ -125,8 +125,8 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
     }
 
     const balanceBox = <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.7 }}>
-        <div>Private balance: {isUpdatingUtxo ? 'Loading..' : userUtxo.toFixed(9) + ' SOL'}</div>
-        <div style={{ height: 32, width: 90, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontSize: '0.9em' }}>Private balance: {isUpdatingUtxo ? 'Loading..' : userUtxo.toFixed(9) + ' SOL'}</div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
             <button className="btn btn-outline btn-sm" onClick={openModal}><Icon name="plus" /> <span>Top Up</span></button>
         </div>
     </div>

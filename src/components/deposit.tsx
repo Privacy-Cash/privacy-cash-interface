@@ -65,7 +65,7 @@ export function Deposit({ updateUtxo, closeModal }: { updateUtxo: Function, clos
                     const lamports = await connection.getBalance(publicKey)
                     setBalance(lamports / LAMPORTS_PER_SOL)
                 }
-                toastSuccess('Top up successful')
+                toastSuccess('Top up successfully')
                 setDepositAmount('')
                 closeModal()
             }

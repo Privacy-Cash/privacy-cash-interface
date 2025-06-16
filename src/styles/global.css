@@ -99,7 +99,6 @@ body {
     justify-content: center;
     gap: 5px;
     align-items: center;
-    transition: all 200ms ease;
 }
 
 .btn-linear {
@@ -320,13 +319,16 @@ body {
 }
 
 .btn-outline {
+    outline: none;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
 
 .btn-outline:hover {
+    outline: 2px solid #1caa50;
+    outline-offset: -1px;
     border-color: #1caa50;
-    border-width: 2px;
+    /* border-width: 2px; */
 }
 
 .hover-zoomin:hover {
