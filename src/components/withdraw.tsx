@@ -147,7 +147,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
                 <div style={{ position: "absolute", right: 10, top: 13, color: "#ccc" }}>SOL</div>
                 <input className="input" placeholder='0.00' value={withdrawAmount} onChange={handleChangeAmount} />
             </div>
-            {balanceBox}
+            {publicKey && balanceBox}
         </div>
         <div style={{ position: "relative", marginTop: 10 }}>
             <input className="input" placeholder='Recipient address' value={receptAddress} onChange={(e) => {
@@ -155,10 +155,10 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
             }} />
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {publicKey && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
             <div>Total fees</div>
             <div>${totalFees.toFixed(9)}</div>
-        </div>
+        </div>}
 
         {publicKey ?
             <button className='btn btn-green btn-lg btn-block' onClick={handleWithdraw} disabled={isWithdrawing ? true : false}>
@@ -166,7 +166,6 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
                 {isWithdrawing ? <span style={{ color: '#ccc' }}>Sending</span> : 'Send'}
             </button> :
             <>
-                <center style={{ color: "var(--color-fg2)" }}>Connect your wallet to deposit SOL</center>
                 <WalletConnectButton size='lg' />
                 <div style={{ height: 10 }}></div>
             </>

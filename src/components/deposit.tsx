@@ -104,7 +104,7 @@ export function Deposit({ updateUtxo, closeModal }: { updateUtxo: Function, clos
             <input className="input" placeholder='0.00' value={depositAmount} onChange={handleChangeAmount} />
         </div>
         <div style={{ margin: '30px 0 10px 0' }}>Wallet balance: {balance !== null ? `${balance} SOL` : 'Loading...'}</div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
             <div>Total fees</div>
             <div>${totalFees.toFixed(9)}</div>
         </div>
