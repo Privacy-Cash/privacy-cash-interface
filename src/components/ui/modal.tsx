@@ -1,17 +1,22 @@
 'use client'
 import React, { useState, useRef, useEffect, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
+import { Icon } from './icons';
+import { useAtom } from 'jotai';
+import { isDepositingAtom } from '@/utils/atoms';
 
 interface ModalProps {
     children: ReactNode;
     onClose: () => void;
     closeOnBackdropClick?: boolean;
+    title: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdropClick = true }) => {
+export const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdropClick = true, title }) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const [showModal, setShowModal] = useState(false); // Controls the CSS for animation
     const [shouldRender, setShouldRender] = useState(false); // Controls if the portal content is in DOM
+    const [isDepositing, setIsDepositing] = useAtom(isDepositingAtom)
 
     // Effect for entry animation
     useEffect(() => {
@@ -90,6 +95,15 @@ export const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdrop
                     transition: 'transform 0.3s ease-out, opacity 0.3s ease-out', // Transition for modal content
                 }}
             >
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                    <div style={{ fontSize: '1.2em' }}>{title}</div>
+                    <div style={{ cursor: 'pointer', color: isDepositing ? '#666' : '#ccc' }} onClick={() => {
+                        if (isDepositing) {
+                            return
+                        }
+                        initiateClose()
+                    }}><Icon name='close' /></div>
+                </div>
                 {children}
             </div>
         </div>,

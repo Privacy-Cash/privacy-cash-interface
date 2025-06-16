@@ -17,6 +17,6 @@ export const CIRCUIT_PATH = '/circuit';
 
 export const MERKLE_TREE_DEPTH = 26;
 
-export const DEPOSIT_FEE_RATE = 25 / 10000;
+export const DEPOSIT_FEE_RATE = 0;
 
 export const WITHDRAW_FEE_RATE = 25 / 10000;

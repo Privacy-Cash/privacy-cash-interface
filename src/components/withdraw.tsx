@@ -133,7 +133,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
 
     return <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         {isModalOpen && (
-            <Modal onClose={closeModal} closeOnBackdropClick={false}>
+            <Modal title="Top up private balance" onClose={closeModal} closeOnBackdropClick={false}>
                 <Deposit updateUtxo={updateUtxo} closeModal={closeModal} />
             </Modal>
         )}
@@ -155,9 +155,9 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
             }} />
         </div>
 
-        {publicKey && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
-            <div>Total fees</div>
-            <div>${totalFees.toFixed(9)}</div>
+        {publicKey && totalFees > 0 && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
+            <div>Protocol fees</div>
+            <div>${totalFees.toFixed(4)}</div>
         </div>}
 
         {publicKey ?

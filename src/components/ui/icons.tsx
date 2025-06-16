@@ -42,8 +42,35 @@ const icons = {
                 strokeLinejoin="round"
             />
         </g>
+    </svg>,
+    close: <svg
+        viewBox="-0.5 0 25 25"
+        fill="none" >
+        <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+        <g
+            id="SVGRepo_tracerCarrier"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <g id="SVGRepo_iconCarrier">
+            <path
+                d="M3 21.32L21 3.32001"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M3 3.32001L21 21.32"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </g>
     </svg>
 }
+
 export function Icon(prop: { name: keyof typeof icons, size?: 'normal' | 'sm' }) {
     let cls = 'icon'
     if (prop.size == 'sm') {

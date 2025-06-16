@@ -2,7 +2,7 @@
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useAtom } from 'jotai';
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { hasherAtom, isDepositingAtom, isWithdrawingAtom, statusAtom, userSOLAmount } from "../utils/atoms";
 import { deposit } from "../utils/deposit";
 import { getAccountSign } from "../utils/getAccountSign";
@@ -22,6 +22,10 @@ export function Deposit({ updateUtxo, closeModal }: { updateUtxo: Function, clos
     const [depositAmount, setDepositAmount] = useState('')
     const [hasher] = useAtom(hasherAtom)
     const [totalFees, setTotalFees] = useState(0)
+    const inputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
     useEffect(() => {
         const fetchBalance = async () => {
             if (publicKey) {
@@ -92,34 +96,25 @@ export function Deposit({ updateUtxo, closeModal }: { updateUtxo: Function, clos
 
     return <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ fontSize: '1.2em' }}>
-                Top up private balance
-            </div>
             <div style={{ fontSize: '0.9em', color: '#999', padding: '10px 0' }}>
                 Add funds to your private balance so you're able to send privately.
             </div>
         </div>
         <div style={{ position: "relative" }}>
             <div style={{ position: "absolute", right: 10, top: 13, color: "#ccc" }}>SOL</div>
-            <input className="input" placeholder='0.00' value={depositAmount} onChange={handleChangeAmount} />
+            <input ref={inputRef} className="input" placeholder='0.00' value={depositAmount} onChange={handleChangeAmount} />
         </div>
         <div style={{ margin: '30px 0 10px 0', opacity: 0.7 }}>Wallet balance: {balance !== null ? `${balance} SOL` : 'Loading...'}</div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
-            <div>Total fees</div>
-            <div>${totalFees.toFixed(9)}</div>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {totalFees > 0 &&
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
+                <div>Protocol fees</div>
+                <div>${totalFees.toFixed(4)}</div>
+            </div>
+        }
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
             <button className='btn btn-green btn-lg btn-block' onClick={handleDeposit} disabled={isDepositing ? true : false}>
                 {isDepositing && <Spinner size={15} />}
                 {isDepositing ? <span style={{ color: '#ccc' }}>Depositing</span> : 'Top up'}
-            </button>
-            <button className='btn btn-plain btn-lg btn-block' onClick={() => {
-                if (isDepositing) {
-                    return
-                }
-                closeModal()
-            }} style={{ color: isDepositing ? '#999' : 'white' }}>
-                Cancel
             </button>
             <div style={{ fontSize: '0.8em', textAlign: 'center', height: 17, padding: '7px 0', display: publicKey ? 'block' : 'none' }}>
                 <center>{status}</center>
