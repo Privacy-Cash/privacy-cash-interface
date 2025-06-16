@@ -127,13 +127,13 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
     const balanceBox = <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.7 }}>
         <div>Private balance: {isUpdatingUtxo ? 'Loading..' : userUtxo.toFixed(9) + ' SOL'}</div>
         <div>
-            <button className="btn btn-outline btn-sm" onClick={openModal}><Icon name="plus" /> <span>Top up</span></button>
+            <button className="btn btn-outline btn-sm" onClick={openModal}><Icon name="plus" /> <span>Top Up</span></button>
         </div>
     </div>
 
     return <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         {isModalOpen && (
-            <Modal title="Top up private balance" onClose={closeModal} closeOnBackdropClick={false}>
+            <Modal title="Top up private balance" onClose={closeModal} closeOnBackdropClick={true}>
                 <Deposit updateUtxo={updateUtxo} closeModal={closeModal} />
             </Modal>
         )}

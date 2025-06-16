@@ -33,8 +33,12 @@ export const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdrop
 
     // Function to initiate closing (start exit animation)
     const initiateClose = () => {
+        if (isDepositing) {
+            return
+        }
         setShowModal(false); // Trigger exit animation
     };
+
 
     // Handle click outside
     useEffect(() => {
@@ -48,7 +52,7 @@ export const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdrop
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [closeOnBackdropClick]);
+    }, [closeOnBackdropClick, isDepositing]);
 
     // Handle transition end for exiting
     const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
@@ -97,7 +101,7 @@ export const Modal: React.FC<ModalProps> = ({ children, onClose, closeOnBackdrop
             >
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                     <div style={{ fontSize: '1.2em' }}>{title}</div>
-                    <div style={{ cursor: 'pointer', color: isDepositing ? '#666' : '#ccc' }} onClick={() => {
+                    <div style={{ cursor: 'pointer', color: isDepositing ? '#333' : '#ccc' }} onClick={() => {
                         if (isDepositing) {
                             return
                         }

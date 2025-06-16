@@ -104,7 +104,7 @@ export function Deposit({ updateUtxo, closeModal }: { updateUtxo: Function, clos
             <div style={{ position: "absolute", right: 10, top: 13, color: "#ccc" }}>SOL</div>
             <input ref={inputRef} className="input" placeholder='0.00' value={depositAmount} onChange={handleChangeAmount} />
         </div>
-        <div style={{ margin: '30px 0 10px 0', opacity: 0.7 }}>Wallet balance: {balance !== null ? `${balance} SOL` : 'Loading...'}</div>
+        <div style={{ margin: '3px 0 20px 0', opacity: 0.7 }}>Wallet balance: {balance !== null ? `${balance} SOL` : 'Loading...'}</div>
         {totalFees > 0 &&
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
                 <div>Protocol fees</div>
@@ -114,7 +114,7 @@ export function Deposit({ updateUtxo, closeModal }: { updateUtxo: Function, clos
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <button className='btn btn-green btn-lg btn-block' onClick={handleDeposit} disabled={isDepositing ? true : false}>
                 {isDepositing && <Spinner size={15} />}
-                {isDepositing ? <span style={{ color: '#ccc' }}>Depositing</span> : 'Top up'}
+                {isDepositing ? <span style={{ color: '#ccc' }}>Depositing</span> : 'Top Up'}
             </button>
             <div style={{ fontSize: '0.8em', textAlign: 'center', height: 17, padding: '7px 0', display: publicKey ? 'block' : 'none' }}>
                 <center>{status}</center>
