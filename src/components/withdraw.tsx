@@ -90,9 +90,9 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
                     setBalance(lamports / LAMPORTS_PER_SOL)
                 }
                 if (success.isPartial) {
-                    toastSuccess('Partial withdrawal successful')
+                    toastSuccess('Sent partial fund successfully')
                 } else {
-                    toastSuccess('Send successful')
+                    toastSuccess('Sent successful')
                 }
                 setWithdrawAmount('')
             }
@@ -157,7 +157,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
 
         {publicKey && totalFees > 0 && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9em', opacity: 0.6 }}>
             <div>Protocol fees</div>
-            <div>{totalFees.toFixed(4)} SOL</div>
+            <div>~ {totalFees.toFixed(4)} SOL</div>
         </div>}
 
         {publicKey ?
