@@ -151,11 +151,16 @@ body {
 }
 
 .btn-sm {
-    padding: 0.4rem 0.9rem;
+    padding: 0.3rem 0.6rem;
 }
 
 .btn-sm span {
     font-size: 14px;
+}
+
+.btn-sm .icon {
+    width: 16px;
+    height: 16px;
 }
 
 .btn-block {
@@ -309,4 +314,8 @@ body {
 
 .btn-plain .disconnect_btn:hover {
     color: #ff8d8d;
+}
+
+.btn-outline {
+    border: 1px solid #ccc;
 }
