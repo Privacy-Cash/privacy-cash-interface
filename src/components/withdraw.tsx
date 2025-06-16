@@ -92,7 +92,7 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
                 if (success.isPartial) {
                     toastSuccess('Partial withdrawal successful')
                 } else {
-                    toastSuccess('Withdraw successful')
+                    toastSuccess('Send successful')
                 }
                 setWithdrawAmount('')
             }
