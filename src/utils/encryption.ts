@@ -188,7 +188,9 @@ export class EncryptionService {
     }
 
     // Create a compact string representation using pipe delimiter
-    const utxoString = `${utxo.amount.toString()}|${utxo.blinding.toString()}|${utxo.index}`;
+    const utxoString = `${utxo.amount.toString()}|${utxo.blinding.toString()}|${utxo.index}|${utxo.mintAddress}`;
+
+
 
     // Use the regular encrypt method
     return this.encrypt(utxoString);
@@ -217,9 +219,9 @@ export class EncryptionService {
 
     // Parse the pipe-delimited format
     const decryptedStr = new TextDecoder().decode(decrypted);
-    const [amount, blinding, index] = decryptedStr.split('|');
+    const [amount, blinding, index, mintAddress] = decryptedStr.split('|');
 
-    if (!amount || !blinding || index === undefined) {
+    if (!amount || !blinding || index === undefined || mintAddress === undefined) {
       throw new Error('Invalid UTXO format after decryption');
     }
     // Get or create a LightWasm instance
@@ -234,7 +236,8 @@ export class EncryptionService {
       amount: amount,
       blinding: blinding,
       keypair: keypair,
-      index: Number(index)
+      index: Number(index),
+      mintAddress: mintAddress
     });
   }
 

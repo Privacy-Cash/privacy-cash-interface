@@ -13,6 +13,8 @@ import { Icon } from "./ui/icons"
 import { WITHDRAW_FEE_RATE } from "@/utils/constants"
 import { Modal } from "./ui/modal"
 import { Deposit } from "./deposit"
+import { currentNetwork } from "./walletProvider"
+import { Connection, clusterApiUrl } from "@solana/web3.js"
 
 export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
     const [isUpdatingUtxo] = useAtom(updatingUtxoAtom)
@@ -33,12 +35,60 @@ export function Withdraw({ updateUtxo }: { updateUtxo: Function }) {
 
     const {
         publicKey,
+        wallet,
+        connected,
     } = useWallet()
+
+    const checkNetwork = async () => {
+        const provider = window?.solana;
+        if (!provider?.isPhantom) {
+            console.log("no phantom");
+        }
+        let r = new Connection(clusterApiUrl('mainnet-beta'))
+        console.log('ok')
+        return
+        try {
+            const resp = await provider.request({
+                method: "solana_provider_config",
+                params: []
+            });
+            console.log('resp:', resp)
+        } catch (e) {
+            console.log('e', e)
+            return
+        }
+
+        // check if use is in correct network
+        if (connection.rpcEndpoint.includes(currentNetwork)) {
+            console.log('correct network: ', currentNetwork)
+            return
+        }
+        if (!wallet) {
+            console.log('wallet not connected')
+            return
+        }
+        // does user wallet support switching
+        if (wallet.adapter.name != 'Phantom') {
+            console.log('wallet not support switching network')
+            return
+        }
+        try {
+            if ((window as any).solana && (window as any).solana.switchSolanaCluster) {
+                await (window as any).solana.switchSolanaCluster(currentNetwork);
+                toastError(`Please switch to ${currentNetwork}`);
+            } else {
+                toastError(`Please switch to ${currentNetwork}`);
+            }
+        } catch (e) {
+            console.error('failed switching network', e);
+        }
+    }
 
     const handleWithdraw = async () => {
         if (isWithdrawing || userUtxo == null) {
             return
         }
+        await checkNetwork()
         if (isDepositing) {
             toastError('Wait till your deposit is finished')
             return

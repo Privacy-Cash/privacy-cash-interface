@@ -338,6 +338,7 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
             inAmount: inputs.map(x => x.amount.toString(10)),
             inPrivateKey: inputs.map(x => x.keypair.privkey),
             inBlinding: inputs.map(x => x.blinding.toString(10)),
+            inMintAddress: inputs.map(x => x.mintAddress),
             inPathIndices: inputMerklePathIndices,
             inPathElements: inputMerklePathElements,
 
@@ -345,6 +346,7 @@ export async function withdraw(recipient_address: PublicKey, amount_in_sol: numb
             outAmount: outputs.map(x => x.amount.toString(10)),
             outBlinding: outputs.map(x => x.blinding.toString(10)),
             outPubkey: outputs.map(x => x.keypair.pubkey),
+            outMintAddress: outputs.map(x => x.mintAddress),
         };
 
         setStatus?.(`(generating ZK proof...)`)

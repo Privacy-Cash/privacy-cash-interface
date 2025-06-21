@@ -12,17 +12,16 @@ import {
 } from '@solana/wallet-adapter-wallets';
 import { type Cluster, clusterApiUrl } from '@solana/web3.js';
 import { type FC, useMemo } from 'react';
-export let solanaNetwork: Cluster = 'devnet'
+export let currentNetwork: Cluster = 'devnet'
 if (typeof process != 'undefined') {
     const networkEnv = process.env.NEXT_PUBLIC_SOLANA_NETWORK;
     if (['devnet', 'testnet', 'mainnet-beta'].includes(networkEnv as Cluster)) {
-        solanaNetwork = networkEnv as Cluster
+        currentNetwork = networkEnv as Cluster
     }
-
 }
 export const WalletContextProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
-    const endpoint = useMemo(() => clusterApiUrl(solanaNetwork), [solanaNetwork]);
+    const endpoint = useMemo(() => clusterApiUrl(currentNetwork), [currentNetwork]);
 
     const wallets = useMemo(
         () => [

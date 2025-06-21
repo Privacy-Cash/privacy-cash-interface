@@ -21,6 +21,7 @@ export class Utxo {
   keypair: Keypair;
   index: number;
   private lightWasm: LightWasm;
+  mintAddress: string;
 
   constructor({
     lightWasm,
@@ -35,23 +36,26 @@ export class Utxo {
      */
     keypair,
     blinding = new BN(Math.floor(Math.random() * 1000000000)), // Use fixed value for consistency instead of randomBN()
-    index = 0
+    index = 0,
+    mintAddress = '11111111111111111111111111111112'
   }: {
     lightWasm: LightWasm,
     amount?: BN | number | string,
     keypair?: Keypair,
     blinding?: BN | number | string,
-    index?: number
+    index?: number,
+    mintAddress?: string,
   }) {
     this.amount = new BN(amount.toString());
     this.blinding = new BN(blinding.toString());
     this.lightWasm = lightWasm;
     this.keypair = keypair || new Keypair(ethers.Wallet.createRandom().privateKey, lightWasm);
     this.index = index;
+    this.mintAddress = mintAddress;
   }
 
   async getCommitment(): Promise<string> {
-    return this.lightWasm.poseidonHashString([this.amount.toString(), this.keypair.pubkey.toString(), this.blinding.toString()]);
+    return this.lightWasm.poseidonHashString([this.amount.toString(), this.keypair.pubkey.toString(), this.blinding.toString(), this.mintAddress]);
   }
 
   async getNullifier(): Promise<string> {

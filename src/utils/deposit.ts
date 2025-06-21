@@ -1,5 +1,5 @@
 'use client'
-import { ComputeBudgetProgram, Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { ComputeBudgetProgram, Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction, TransactionInstruction, SendTransactionError, sendAndConfirmTransaction } from '@solana/web3.js';
 import BN from 'bn.js';
 import { Keypair as UtxoKeypair } from '../models/keypair';
 import { Utxo } from '../models/utxo';
@@ -366,6 +366,7 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
             inAmount: inputs.map(x => x.amount.toString(10)),
             inPrivateKey: inputs.map(x => x.keypair.privkey),
             inBlinding: inputs.map(x => x.blinding.toString(10)),
+            inMintAddress: inputs.map(x => x.mintAddress),
             inPathIndices: inputMerklePathIndices,
             inPathElements: inputMerklePathElements,
 
@@ -373,6 +374,7 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
             outAmount: outputs.map(x => x.amount.toString(10)),
             outBlinding: outputs.map(x => x.blinding.toString(10)),
             outPubkey: outputs.map(x => x.keypair.pubkey),
+            outMintAddress: outputs.map(x => x.mintAddress),
         };
         setStatus?.(`(generating ZK proof...)`)
         console.log('Generating proof... (this may take a minute)');
@@ -445,7 +447,6 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
             .add(modifyComputeUnits)
             .add(instruction);
 
-
         const latestBlockhash = await connection.getLatestBlockhash();
         transaction.recentBlockhash = latestBlockhash.blockhash;
         transaction.feePayer = signed.publicKey;
@@ -459,8 +460,10 @@ export async function deposit(amount_in_sol: number, signed: Signed, connection:
             blockhash: latestBlockhash.blockhash,
             lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
         });
+
         console.log('Transaction sent:', txid);
         console.log(`Transaction link: https://explorer.solana.com/tx/${txid}?cluster=devnet`);
+
 
         // Wait a moment for the transaction to be confirmed
         setStatus?.(`(waiting for transaction confirmation...)`)

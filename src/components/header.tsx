@@ -3,7 +3,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useRef, useState } from "react";
 import { toastSuccess } from "./toast";
 import WalletConnectButton from "./walletConnectBtn";
-import { solanaNetwork } from "./walletProvider";
+import { currentNetwork } from "./walletProvider";
 import Dropdown from './ui/dropdown';
 import { Icon } from "./ui/icons";
 

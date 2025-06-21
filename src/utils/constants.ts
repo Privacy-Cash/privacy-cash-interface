@@ -4,9 +4,9 @@ import BN from 'bn.js';
 
 export const FIELD_SIZE = new BN('21888242871839275222246405745257275088548364400416034343698204186575808495617')
 
-export const PROGRAM_ID = new PublicKey('AW7zH2XvbZZuXtF7tcfCRzuny7L89GGqB3z3deGpejWQ');
+export const PROGRAM_ID = new PublicKey('6JFJ27mebUcPSw1X5z5X6yKePQmuwQkusS7xNpE9kuUr');
 
-export const DEPLOYER_ID = new PublicKey('Fj2iBWFwfejrNEVusU4LEXUYVp2R3AVVWG9srFAs2isH')
+export const DEPLOYER_ID = new PublicKey('FrhAUwGkoVD6TC8xGnYp5g5nNkuZiG7sXCyofZEuQ7hC')
 
 export const FEE_RECIPIENT = new PublicKey('EjusM5jooQkcfGFWrZPmzw9GeoxFpJKjdsSmHLQe3GYx')
 
